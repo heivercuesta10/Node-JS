@@ -1,10 +1,10 @@
 # Guia de NodeJS Backend
-
-## Introducción
-
+  
+## Introducción  
+    
 Ahora con JavaScript puedes crear aplicaciones que corren del lado del servidor gracias a Node.js.
 
-
+  
 ## ¿Qué es Node.js?
 
 Se trata de un entorno de código abierto (open source) multiplataforma que ejecuta el código JavaScript fuera de un navegador. Este entorno de ejecución de JavaScript se orienta a eventos asíncronos (los eventos no dependen de que otros se hayan ejecutado previamente) y permite construir aplicaciones en red escalables, es decir, tiene la capacidad de realizar muchas conexiones de manera simultánea sin que tenga que leer el código línea a línea, ni abrir múltiples procesos.
@@ -37,9 +37,12 @@ Tecnologías de desarrollo stackoverflow:  (https://survey.stackoverflow.co/2023
 ## Ejemplo de Programación utilizando Framework Express
 
 
-**EndPoint POST**
+## Instalación de dependencias
 
-*app.js*  
+ 1. npm init
+ 2. npm install express
+
+## Configuración Inicial
 
 const express = require('express');
 
@@ -47,37 +50,131 @@ const app = express();
 
 const PORT = 3000;
 
-
 app.use(express.json());
 
-
-app.post('/', function (req, res) {
-
-         console.log(req.body.name)
-    
-         console.log(req.body)
-
-         const datos = req.body
-    
-         res.send(req.body)
-    
-         res.end();
-    
-})
-
+## Configuración del puerto
 
 app.listen(PORT, function (err) {
 
     if (err) console.log(err);
     
-    console.log("Server listening on PORT", PORT);
-    
-});
+        console.log("Server listening on PORT", PORT);
+        
+}); 
 
+
+## Consideraciones
 
 **Nota:** para los endpoint POST, PUT, DELETE, PATCH es importante adicionar la siguiente línea: 
 
 app.use(express.json());
+
+
+**EndPoint GET**
+
+Realiza consulta general:
+
+*app.js*  
+
+
+const express = require('express');
+
+const app = express();
+
+const PORT = 3000;
+
+app.use(express.json());
+
+app.get('/api/consultar', function (req, res) {
+
+    res.send("Consulta de Datos All")
+    
+    res.end();
+    
+    })
+
+
+
+**EndPoint GET**
+
+
+Realiza consulta Filtrada:
+
+
+*app.js*  
+
+
+app.get('/api/consultar/:id', function (req, res) {
+
+    const dato = req.params.id;
+    
+    res.send("Vamos a consultar el Dato:" + dato);
+    
+    res.end();
+    
+})
+
+    
+
+**EndPoint POST**
+
+*app.js* 
+
+
+app.post('/api/agregar', function (req, res) {
+
+    const datos = req.body;
+    
+    console.log(datos);
+    
+    res.send("Se van a agregar los datos: " + JSON.stringify(datos))
+    
+    res.end();
+    
+})
+
+
+**EndPoint PUT**
+
+*app.js* 
+
+app.put('/api/modificar/:id', function (req,res) {
+
+    const id = req.params.id;
+    
+    const dato_modificar = req.body
+    
+    res.send("El dato a buscar es: " + id + " los datos a modificar son : " + JSON.stringify(dato_modificar));
+    
+    res.end();
+    
+})
+
+
+**EndPoint DELETE**
+
+*app.js* 
+
+app.delete('/api/eliminar/:id', function(req,res) {
+
+    let id_buscar = req.params.id;
+    
+    res.json("El dato a borrar es: " + id_buscar);
+    
+})
+
+
+## Ejecutar
+
+node app.js
+
+
+
+
+
+
+
+
 
 
 **Ing. Heiver Cuesta Dávila**
